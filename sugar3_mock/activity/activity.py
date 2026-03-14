@@ -30,6 +30,12 @@ class Activity(Gtk.Window):
         Gtk.Window.add(self, self._root_box)
         self._toolbar_box = None
         self._canvas = None
+        self.shared_activity = None
+        self.metadata = {}
+        self.handle = type("Handle", (), {"activity_id": "local-0001", "object_id": None, "invited": False})()
+        self.shared_activity = None
+        self.metadata = {}
+        self.handle = type("Handle", (), {"activity_id": "local-0001", "object_id": None, "invited": False})()
 
     def set_canvas(self, widget):
         if self._canvas is not None:
