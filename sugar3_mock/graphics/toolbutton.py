@@ -3,6 +3,9 @@ from gi.repository import Gtk
 class _MockPalette:
     def set_primary_text(self, text): pass
     def get_primary_text(self): return ""
+    def set_content(self, widget): pass
+    def set_secondary_text(self, text): pass
+    def set_invoker(self, invoker): pass
     def popup(self): pass
     def popdown(self): pass
 
