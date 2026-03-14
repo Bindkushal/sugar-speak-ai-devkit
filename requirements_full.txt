@@ -1,0 +1,42 @@
+# ============================================================
+# requirements_full.txt  —  PATH A (12+ GB RAM, GPU optional)
+# ============================================================
+# WARNING: This will download approximately 2–4 GB of data.
+#   - torch alone: ~700MB–2GB depending on CUDA version
+#   - Kokoro TTS models: ~500MB (downloaded on first run)
+#   - transformers models: ~500MB+
+#
+# Install:
+#   pip install -r requirements_full.txt
+# ============================================================
+
+# ── TTS core ──
+kokoro>=0.9.4          # Kokoro neural TTS (English + Hindi voices)
+misaki[en]             # G2P for English Kokoro voices
+misaki[hi]             # G2P for Hindi Kokoro voices  ← for our Hindi model
+soundfile              # audio file I/O
+
+# ── ML / LLM ──
+torch                  # WARNING: ~700MB–2GB download
+transformers           # SLM support (~500MB+ models on first run)
+huggingface_hub        # model downloads
+llama-cpp-python       # local GGUF inference (needs C++ compiler)
+                       # skip if you don't need the built-in LLM
+
+# ── NLP / bot ──
+spacy                  # AIML bot pipeline
+numpy                  # audio processing
+
+# ── Network ──
+requests               # LLM API calls
+flask                  # only needed if running tts_server.py locally
+
+# ── System dependencies (apt, NOT pip) ──
+# sudo apt install -y \
+#   espeak-ng \
+#   gstreamer1.0-espeak \
+#   gir1.2-gstreamer-1.0 \
+#   gir1.2-gst-plugins-base-1.0 \
+#   gstreamer1.0-plugins-good \
+#   gstreamer1.0-plugins-base \
+#   python3-gi python3-gi-cairo

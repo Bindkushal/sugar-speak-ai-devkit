@@ -1,0 +1,33 @@
+# ============================================================
+# requirements_light.txt  —  PATH B (4 GB RAM, no GPU)
+# ============================================================
+# Lightweight setup — TTS runs on Google Colab, NOT locally.
+# torch and kokoro are NOT installed here.
+#
+# Install:
+#   pip install -r requirements_light.txt
+#
+# Then open colab_tts_server.ipynb in Google Colab for TTS.
+# ============================================================
+
+# ── Audio / networking ──
+soundfile              # audio playback helpers
+requests               # calls Colab TTS server
+flask                  # local tts_server.py if you want to test without Colab
+
+# ── NLP / bot ──
+spacy                  # AIML bot pipeline
+numpy                  # audio processing
+
+# ── LLM API (no local model needed) ──
+huggingface_hub        # optional: for downloading small models only
+
+# ── System dependencies (apt, NOT pip) ──
+# sudo apt install -y \
+#   espeak-ng \
+#   gstreamer1.0-espeak \
+#   gir1.2-gstreamer-1.0 \
+#   gir1.2-gst-plugins-base-1.0 \
+#   gstreamer1.0-plugins-good \
+#   gstreamer1.0-plugins-base \
+#   python3-gi python3-gi-cairo

@@ -1,0 +1,1 @@
+# sugar3_mock/presence/__init__.py

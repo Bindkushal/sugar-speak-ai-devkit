@@ -1,0 +1,31 @@
+# speak-ai requirements — fixed for local development
+# Install: pip install -r requirements.txt
+
+# ── TTS core ──
+kokoro>=0.9.4          # Kokoro TTS (was MISSING from original)
+misaki[en]             # G2P for English Kokoro voices
+soundfile              # audio file I/O for Kokoro (was MISSING)
+
+# ── ML / LLM ──
+llama-cpp-python       # local GGUF inference (GenAI/)
+huggingface_hub        # model downloads
+torch                  # Kokoro + transformers backend
+transformers           # SLM support
+
+# ── NLP ──
+spacy                  # used by brain / AIML pipeline
+numpy                  # audio processing in speech.py
+
+# ── Network ──
+requests               # LLM.py API calls
+
+# ── System dependencies (apt, NOT pip) ──
+# sudo apt install -y \
+#   espeak-ng \
+#   gstreamer1.0-espeak \
+#   gir1.2-gstreamer-1.0 \
+#   gir1.2-gst-plugins-base-1.0 \
+#   gstreamer1.0-plugins-good \
+#   gstreamer1.0-plugins-base \
+#   python3-gi \
+#   python3-gi-cairo

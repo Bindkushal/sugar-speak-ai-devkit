@@ -1,0 +1,37 @@
+# speak-ai local dev toolkit — gitignore
+
+# Never commit your Colab URL (contains your ngrok token)
+colab_url.txt
+
+# Never commit your LLM API key
+API_KEY.txt
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Env
+.env
+.venv
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Model files (large — don't commit)
+*.gguf
+*.bin
+*.safetensors
+*.pt
+*.pth
