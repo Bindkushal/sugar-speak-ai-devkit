@@ -121,6 +121,45 @@ def allVoices():
     if en_key not in _allVoices:
         _allVoices[en_key] = Voice('en', 'en', 'English')
 
+    # Inject common espeak voices so the UI never has KeyError
+    fallback_voices = [
+        Voice('en', 'en',          'English'),
+        Voice('en', 'en-us',       'English (America)'),
+        Voice('en', 'en-gb',       'English (Great Britain)'),
+        Voice('es', 'es',          'Spanish'),
+        Voice('es', 'es-la',       'Spanish (Latin America)'),
+        Voice('fr', 'fr',          'French'),
+        Voice('de', 'de',          'German'),
+        Voice('it', 'it',          'Italian'),
+        Voice('pt', 'pt',          'Portuguese'),
+        Voice('pt', 'pt-br',       'Portuguese (Brazil)'),
+        Voice('ru', 'ru',          'Russian'),
+        Voice('zh', 'zh',          'Cantonese'),
+        Voice('sv', 'sv',          'Swedish'),
+        Voice('nl', 'nl',          'Dutch'),
+        Voice('pl', 'pl',          'Polish'),
+        Voice('fi', 'fi',          'Finnish'),
+        Voice('hu', 'hu',          'Hungarian'),
+        Voice('el', 'el',          'Greek'),
+        Voice('ro', 'ro',          'Romanian'),
+        Voice('cs', 'cs',          'Czech'),
+        Voice('sk', 'sk',          'Slovak'),
+        Voice('hr', 'hr',          'Croatian'),
+        Voice('af', 'af',          'Afrikaans'),
+        Voice('sw', 'sw',          'Swahili'),
+        Voice('cy', 'cy',          'Welsh'),
+        Voice('la', 'la',          'Latin'),
+        Voice('eo', 'eo',          'Esperanto'),
+        Voice('vi', 'vi',          'Vietnamese'),
+        Voice('is', 'is',          'Icelandic'),
+        Voice('mk', 'mk',          'Macedonian'),
+        Voice('no', 'no',          'Norwegian'),
+        Voice('en', 'whisper',     'Whisper'),
+    ]
+    for v in fallback_voices:
+        if v.friendlyname not in _allVoices:
+            _allVoices[v.friendlyname] = v
+
     # Inject Hindi espeak voices
     for v in HINDI_ESPEAK_VOICES:
         _allVoices[v.friendlyname] = v
