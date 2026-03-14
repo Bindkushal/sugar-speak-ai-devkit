@@ -1,17 +1,21 @@
 # sugar3_mock/presence/presenceservice.py
-# Stub for sugar3.presence.presenceservice
-# In local mode there is no XMPP / collaboration.
 
-class _MockOwner:
-    """Fake 'owner' buddy returned by presenceservice."""
-    def get_key(self):
-        return ''
-    def get_color(self):
-        return '#8b0000,#1e90ff'
-    def props(self):
-        return self
+class _MockProps:
     nick = 'User'
     color = '#8b0000,#1e90ff'
+
+class _MockOwner:
+    def __init__(self):
+        self.props = _MockProps()
+
+    def get_key(self):
+        return ''
+
+    def get_color(self):
+        return self.props.color
+
+    def get_nick(self):
+        return self.props.nick
 
 class _MockPresenceService:
     def __init__(self):
