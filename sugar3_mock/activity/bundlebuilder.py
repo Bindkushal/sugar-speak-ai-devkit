@@ -1,0 +1,2 @@
+# stub
+def start(): pass
