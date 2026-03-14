@@ -24,7 +24,7 @@ class Activity(Gtk.Window):
     __gsignals__ = {
         "shared":       (GObject.SIGNAL_RUN_FIRST, None, []),
         "joined":       (GObject.SIGNAL_RUN_FIRST, None, []),
-        "_closing":     (GObject.SIGNAL_RUN_FIRST, None, []),
+        "closing":      (GObject.SIGNAL_RUN_FIRST, None, []),
         "save-error":   (GObject.SIGNAL_RUN_FIRST, None, [object]),
     }
 
