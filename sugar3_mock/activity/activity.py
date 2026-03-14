@@ -28,7 +28,7 @@ class Activity(Gtk.Window):
         Gtk.Window.__init__(self)
         self.set_title("Speak AI (local)")
         self.set_resizable(True)
-        self.maximize()
+        self.set_default_size(1000, 600)
         self.connect("destroy", Gtk.main_quit)
 
         self._root_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)

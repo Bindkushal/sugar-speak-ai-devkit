@@ -27,7 +27,7 @@ import numpy as np
 logger = logging.getLogger('speak.tts_client')
 
 # ── Read config ─────────────────────────────────────────────
-TTS_MODE    = os.environ.get('SPEAK_AI_TTS', 'auto').lower()
+TTS_MODE    = os.environ.get('SPEAK_AI_TTS', 'espeak').lower()
 COLAB_URL   = os.environ.get('COLAB_TTS_URL', '').rstrip('/')
 
 # Also accept URL from a file (user drops colab_url.txt into repo root)
