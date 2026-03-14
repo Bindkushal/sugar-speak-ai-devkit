@@ -16,11 +16,18 @@ def get_bundle_path():
     return os.path.dirname(os.path.abspath(__file__))
 
 import gi
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, GLib
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk, GLib, GObject
 import os
 
 class Activity(Gtk.Window):
+    __gsignals__ = {
+        "shared":       (GObject.SIGNAL_RUN_FIRST, None, []),
+        "joined":       (GObject.SIGNAL_RUN_FIRST, None, []),
+        "_closing":     (GObject.SIGNAL_RUN_FIRST, None, []),
+        "save-error":   (GObject.SIGNAL_RUN_FIRST, None, [object]),
+    }
+
     def __init__(self, handle=None):
         Gtk.Window.__init__(self)
         self.set_title('Speak AI (local)')
