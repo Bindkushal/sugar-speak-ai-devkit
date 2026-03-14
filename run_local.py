@@ -91,7 +91,13 @@ except Exception as e:
     sys.exit(1)
 
 try:
-    app = SpeakActivity(handle=None)
+    class _Handle:
+        activity_id = "local-0001"
+        object_id   = None
+        invited     = False
+        uri         = None
+
+    app = SpeakActivity(handle=_Handle())
     app.show_all()
     print("✓ Window shown — starting GTK main loop")
     Gtk.main()
