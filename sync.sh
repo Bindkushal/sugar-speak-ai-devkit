@@ -28,6 +28,6 @@ cp $DEVKIT/speech_patched.py $SPEAK_AI/speech.py
 cp $DEVKIT/voice_patched.py $SPEAK_AI/voice.py
 
 # Apply GenAI patch
-python3 $DEVKIT/fix_genai.py
+python3 $DEVKIT/fix_genai.py $SPEAK_AI
 
 echo "✓ Sync done. Now run: cd $SPEAK_AI && python run_local.py"

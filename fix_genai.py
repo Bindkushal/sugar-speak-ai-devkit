@@ -1,13 +1,21 @@
-# This script patches GenAI/__init__.py in speak-ai
-# to not crash when llama-cpp-python is not installed
 import os
+import sys
 
-target = os.path.join(os.path.dirname(__file__), 'GenAI', '__init__.py')
-if not os.path.exists(target):
-    print(f"GenAI/__init__.py not found at {target}")
+# Target is speak-ai dir passed as argument, or auto-detect
+if len(sys.argv) > 1:
+    speak_ai_dir = sys.argv[1]
 else:
-    with open(target, 'w') as f:
-        f.write("""# Copyright (C) 2025, Mebin J Thattil <mail@mebin.in>
+    speak_ai_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'speak-ai')
+    speak_ai_dir = os.path.realpath(speak_ai_dir)
+
+target = os.path.join(speak_ai_dir, 'GenAI', '__init__.py')
+
+if not os.path.exists(target):
+    print(f"Not found: {target}")
+    sys.exit(1)
+
+with open(target, 'w') as f:
+    f.write("""# Copyright (C) 2025, Mebin J Thattil <mail@mebin.in>
 # GPL-3.0 — see COPYING for details
 
 try:
@@ -19,4 +27,4 @@ except ImportError:
 
 from .profainity_check import *
 """)
-    print(f"Patched {target}")
+print(f"✓ Patched {target}")
