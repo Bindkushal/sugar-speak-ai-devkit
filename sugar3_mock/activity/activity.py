@@ -31,7 +31,20 @@ class Activity(Gtk.Window):
     def __init__(self, handle=None):
         Gtk.Window.__init__(self)
         self.set_title('Speak AI (local)')
-        self.set_default_size(800, 600)
+        self.set_default_size(800, 550)
+        self.set_resizable(True)
+        # Maximize on small screens
+        import subprocess
+        try:
+            r = subprocess.run(["xrandr"], capture_output=True, text=True)
+            for line in r.stdout.splitlines():
+                if "*" in line:
+                    w = int(line.strip().split()[0].split("x")[0])
+                    if w < 1024:
+                        self.maximize()
+                    break
+        except Exception:
+            pass
         self.connect('destroy', Gtk.main_quit)
         self._root_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         Gtk.Window.add(self, self._root_box)
