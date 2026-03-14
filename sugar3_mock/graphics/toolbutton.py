@@ -7,7 +7,7 @@ class _MockPalette:
     def set_secondary_text(self, text): pass
     def set_invoker(self, invoker): pass
     def popup(self): pass
-    def popdown(self): pass
+    def popdown(self, immediate=False): pass
 
 class ToolButton(Gtk.ToolButton):
     def __init__(self, icon_name=None, **kwargs):
