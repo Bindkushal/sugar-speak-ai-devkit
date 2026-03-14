@@ -37,14 +37,6 @@ import sugar3_mock.graphics.palette        as _palette
 import sugar3_mock.graphics.palettemenu    as _palettemenu
 import sugar3_mock.util                    as _util
 import sugar3_mock.activity.bundlebuilder  as _bundlebuilder
-import sugar3_mock.util                    as _util
-import sugar3_mock.activity.bundlebuilder  as _bundlebuilder
-import sugar3_mock.graphics.palette        as _palette
-import sugar3_mock.graphics.palettemenu    as _palettemenu
-import sugar3_mock.util                    as _util
-import sugar3_mock.activity.bundlebuilder  as _bundlebuilder
-import sugar3_mock.util                    as _util
-import sugar3_mock.activity.bundlebuilder  as _bundlebuilder
 import sugar3_mock.presence               as _pres
 import sugar3_mock.presence.presenceservice as _presservice
 import sugar3_mock.datastore              as _ds
@@ -64,14 +56,6 @@ sys.modules["sugar3.graphics.objectchooser"]   = _objchooser
 sys.modules["sugar3.graphics.icon"]           = _icon
 sys.modules["sugar3.graphics.palette"]        = _palette
 sys.modules["sugar3.graphics.palettemenu"]    = _palettemenu
-sys.modules["sugar3.util"]                    = _util
-sys.modules["sugar3.activity.bundlebuilder"]  = _bundlebuilder
-sys.modules["sugar3.util"]                    = _util
-sys.modules["sugar3.activity.bundlebuilder"]  = _bundlebuilder
-sys.modules["sugar3.graphics.palette"]        = _palette
-sys.modules["sugar3.graphics.palettemenu"]    = _palettemenu
-sys.modules["sugar3.util"]                    = _util
-sys.modules["sugar3.activity.bundlebuilder"]  = _bundlebuilder
 sys.modules["sugar3.util"]                    = _util
 sys.modules["sugar3.activity.bundlebuilder"]  = _bundlebuilder
 sys.modules["sugar3.presence"]                 = _pres
