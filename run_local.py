@@ -42,7 +42,7 @@ import telepathy_mock
 # TelepathyGLib lives under gi.repository
 import gi
 # Patch gi.repository so that `from gi.repository import TelepathyGLib` works
-if not hasattr(gi.repository, 'TelepathyGLib'):
+# patch TelepathyGLib
     sys.modules['gi.repository.TelepathyGLib'] = telepathy_mock
     # Also make it accessible as an attribute so gi.require_version doesn't crash
     original_require = gi.require_version
