@@ -48,7 +48,7 @@ class Activity(Gtk.Window):
         if self._canvas is not None:
             self._root_box.remove(self._canvas)
         self._canvas = widget
-        self._root_box.pack_start(widget, True, True, 0)
+        self._root_box.pack_end(widget, True, True, 0)
 
     def set_toolbar_box(self, toolbar_box):
         if self._toolbar_box is not None:
