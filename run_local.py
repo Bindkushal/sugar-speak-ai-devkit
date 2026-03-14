@@ -1,4 +1,13 @@
 #!/usr/bin/env python3
+"""
+run_local.py — Local launcher for speak-ai
+==========================================
+Copy this into your speak-ai repo root and run:
+    python run_local.py
+
+Requires: sugar-speak-ai-devkit files copied into the same directory.
+"""
+
 import sys
 import os
 
@@ -8,6 +17,7 @@ for p in [SCRIPT_DIR, REPO_ROOT]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
+# ── 1. Inject dbus + TelepathyGLib mocks ──────────────────────
 import dbus_mock
 sys.modules["dbus"] = dbus_mock
 
@@ -22,65 +32,50 @@ def patched_require(namespace, version):
     return original_require(namespace, version)
 gi.require_version = patched_require
 
+# ── 2. Inject sugar3 mocks ─────────────────────────────────────
 import sugar3_mock
-import sugar3_mock.activity               as _act
-import sugar3_mock.activity.activity      as _act_activity
-import sugar3_mock.activity.widgets       as _act_widgets
-import sugar3_mock.graphics               as _gfx
-import sugar3_mock.graphics.style         as _style
-import sugar3_mock.graphics.toolbutton    as _toolbtn
+import sugar3_mock.activity                as _act
+import sugar3_mock.activity.activity       as _act_activity
+import sugar3_mock.activity.widgets        as _act_widgets
+import sugar3_mock.activity.bundlebuilder  as _bundlebuilder
+import sugar3_mock.graphics                as _gfx
+import sugar3_mock.graphics.style          as _style
+import sugar3_mock.graphics.toolbutton     as _toolbtn
 import sugar3_mock.graphics.radiotoolbutton as _rtoolbtn
-import sugar3_mock.graphics.toolbarbox    as _toolbarbox
-import sugar3_mock.graphics.objectchooser as _objchooser
+import sugar3_mock.graphics.toolbarbox     as _toolbarbox
+import sugar3_mock.graphics.objectchooser  as _objchooser
 import sugar3_mock.graphics.icon           as _icon
 import sugar3_mock.graphics.palette        as _palette
 import sugar3_mock.graphics.palettemenu    as _palettemenu
-import sugar3_mock.util                    as _util
-import sugar3_mock.activity.bundlebuilder  as _bundlebuilder
-import sugar3_mock.util                    as _util
-import sugar3_mock.activity.bundlebuilder  as _bundlebuilder
-import sugar3_mock.graphics.palette        as _palette
-import sugar3_mock.graphics.palettemenu    as _palettemenu
-import sugar3_mock.util                    as _util
-import sugar3_mock.activity.bundlebuilder  as _bundlebuilder
-import sugar3_mock.util                    as _util
-import sugar3_mock.activity.bundlebuilder  as _bundlebuilder
-import sugar3_mock.presence               as _pres
+import sugar3_mock.presence                as _pres
 import sugar3_mock.presence.presenceservice as _presservice
-import sugar3_mock.datastore              as _ds
-import sugar3_mock.datastore.datastore    as _datastore
-import sugar3_mock.speech                 as _speech_mod
+import sugar3_mock.datastore               as _ds
+import sugar3_mock.datastore.datastore     as _datastore
+import sugar3_mock.speech                  as _speech_mod
+import sugar3_mock.util                    as _util
 
-sys.modules["sugar3"]                          = sugar3_mock
-sys.modules["sugar3.activity"]                 = _act
-sys.modules["sugar3.activity.activity"]        = _act_activity
-sys.modules["sugar3.activity.widgets"]         = _act_widgets
-sys.modules["sugar3.graphics"]                 = _gfx
-sys.modules["sugar3.graphics.style"]           = _style
-sys.modules["sugar3.graphics.toolbutton"]      = _toolbtn
-sys.modules["sugar3.graphics.radiotoolbutton"] = _rtoolbtn
-sys.modules["sugar3.graphics.toolbarbox"]      = _toolbarbox
-sys.modules["sugar3.graphics.objectchooser"]   = _objchooser
-sys.modules["sugar3.graphics.icon"]           = _icon
-sys.modules["sugar3.graphics.palette"]        = _palette
-sys.modules["sugar3.graphics.palettemenu"]    = _palettemenu
-sys.modules["sugar3.util"]                    = _util
-sys.modules["sugar3.activity.bundlebuilder"]  = _bundlebuilder
-sys.modules["sugar3.util"]                    = _util
-sys.modules["sugar3.activity.bundlebuilder"]  = _bundlebuilder
-sys.modules["sugar3.graphics.palette"]        = _palette
-sys.modules["sugar3.graphics.palettemenu"]    = _palettemenu
-sys.modules["sugar3.util"]                    = _util
-sys.modules["sugar3.activity.bundlebuilder"]  = _bundlebuilder
-sys.modules["sugar3.util"]                    = _util
-sys.modules["sugar3.activity.bundlebuilder"]  = _bundlebuilder
-sys.modules["sugar3.presence"]                 = _pres
-sys.modules["sugar3.presence.presenceservice"] = _presservice
-sys.modules["sugar3.datastore"]                = _ds
-sys.modules["sugar3.datastore.datastore"]      = _datastore
-sys.modules["sugar3.speech"]                   = _speech_mod
-sys.modules["sugar3.mime"]                     = sugar3_mock.mime
-sys.modules["sugar3.profile"]                  = sugar3_mock.profile
+sys.modules["sugar3"]                           = sugar3_mock
+sys.modules["sugar3.activity"]                  = _act
+sys.modules["sugar3.activity.activity"]         = _act_activity
+sys.modules["sugar3.activity.widgets"]          = _act_widgets
+sys.modules["sugar3.activity.bundlebuilder"]    = _bundlebuilder
+sys.modules["sugar3.graphics"]                  = _gfx
+sys.modules["sugar3.graphics.style"]            = _style
+sys.modules["sugar3.graphics.toolbutton"]       = _toolbtn
+sys.modules["sugar3.graphics.radiotoolbutton"]  = _rtoolbtn
+sys.modules["sugar3.graphics.toolbarbox"]       = _toolbarbox
+sys.modules["sugar3.graphics.objectchooser"]    = _objchooser
+sys.modules["sugar3.graphics.icon"]             = _icon
+sys.modules["sugar3.graphics.palette"]          = _palette
+sys.modules["sugar3.graphics.palettemenu"]      = _palettemenu
+sys.modules["sugar3.presence"]                  = _pres
+sys.modules["sugar3.presence.presenceservice"]  = _presservice
+sys.modules["sugar3.datastore"]                 = _ds
+sys.modules["sugar3.datastore.datastore"]       = _datastore
+sys.modules["sugar3.speech"]                    = _speech_mod
+sys.modules["sugar3.util"]                      = _util
+sys.modules["sugar3.mime"]                      = sugar3_mock.mime
+sys.modules["sugar3.profile"]                   = sugar3_mock.profile
 
 sugar3_mock.activity  = _act
 sugar3_mock.presence  = _pres
@@ -88,16 +83,17 @@ sugar3_mock.datastore = _ds
 sugar3_mock.speech    = _speech_mod
 sugar3_mock.graphics  = _gfx
 
+# ── 3. GTK + GStreamer ─────────────────────────────────────────
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gst", "1.0")
 from gi.repository import Gtk, Gst, GObject
 
-GObject.threads_init()
 Gst.init(None)
 
 print("✓ Mocks injected")
 print("✓ GTK + GStreamer initialised")
 
+# ── 4. Launch ──────────────────────────────────────────────────
 try:
     from activity import SpeakActivity
     print("✓ SpeakActivity imported")
