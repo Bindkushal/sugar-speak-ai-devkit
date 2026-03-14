@@ -31,7 +31,7 @@ class Activity(Gtk.Window):
     def __init__(self, handle=None):
         Gtk.Window.__init__(self)
         self.set_title('Speak AI (local)')
-        self.set_default_size(1200, 800)
+        self.set_default_size(800, 600)
         self.connect('destroy', Gtk.main_quit)
         self._root_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         Gtk.Window.add(self, self._root_box)
@@ -59,6 +59,14 @@ class Activity(Gtk.Window):
 
     def get_toolbar_box(self):
         return self._toolbar_box
+
+    @property
+    def toolbar_box(self):
+        return self._toolbar_box
+
+    @toolbar_box.setter
+    def toolbar_box(self, toolbar_box):
+        self.set_toolbar_box(toolbar_box)
 
     def read_file(self, file_path): pass
     def write_file(self, file_path): pass
