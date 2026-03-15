@@ -94,8 +94,12 @@ import face as _face_mod
 _original_say = None
 def _patched_say(self, something):
     _espeak_direct(something)
-_face_mod.Face.say = _patched_say
-_face_mod.Face.say_notification = _patched_say
+try:
+    _face_mod.Face.say = _patched_say
+    _face_mod.Face.say_notification = _patched_say
+    print("✓ Direct espeak patch applied")
+except AttributeError:
+    pass  # will be patched after import
 try:
     from activity import SpeakActivity
     print("✓ SpeakActivity imported")
