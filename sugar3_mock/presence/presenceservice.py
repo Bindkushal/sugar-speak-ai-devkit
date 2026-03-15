@@ -1,8 +1,11 @@
 # sugar3_mock/presence/presenceservice.py
 
 class _MockProps:
-    nick = 'User'
-    color = '#8b0000,#1e90ff'
+    nick = "User"
+    color = "#8b0000,#1e90ff"
+
+    def __getattr__(self, name):
+        return None
 
 class _MockOwner:
     def __init__(self):
