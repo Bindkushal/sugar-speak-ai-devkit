@@ -82,6 +82,20 @@ Gst.init(None)
 print("✓ Mocks injected")
 print("✓ GTK + GStreamer initialised")
 
+
+# ── Direct espeak patch (bypasses GStreamer pipeline issues) ──
+import subprocess, threading
+
+def _espeak_direct(text, voice='en'):
+    subprocess.Popen(['espeak-ng', '-v', voice, text])
+
+# Patch face.say() to use direct espeak
+import face as _face_mod
+_original_say = None
+def _patched_say(self, something):
+    _espeak_direct(something)
+_face_mod.Face.say = _patched_say
+_face_mod.Face.say_notification = _patched_say
 try:
     from activity import SpeakActivity
     print("✓ SpeakActivity imported")
