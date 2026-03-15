@@ -14,6 +14,11 @@ for p in [SCRIPT_DIR, REPO_ROOT]:
 # Remove real sugar3 from path — use our mock instead
 sys.path = [p for p in sys.path if "dist-packages" not in p or "sugar3" not in p]
 
+import gi
+gi.require_version("Gdk", "3.0")
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gst", "1.0")
+
 import dbus_mock
 sys.modules["dbus"] = dbus_mock
 
