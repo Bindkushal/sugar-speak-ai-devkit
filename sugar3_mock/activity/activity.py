@@ -73,3 +73,9 @@ class Activity(Gtk.Window):
     def write_file(self, file_path): pass
     def get_activity_root(self): return _ACTIVITY_ROOT
     def share(self, private=False): pass
+
+    class _Props:
+        active = True
+        is_active = True
+
+    props = _Props()
