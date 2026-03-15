@@ -2,6 +2,9 @@
 import sys
 import os
 
+# Force X11 backend for Wayland compatibility
+os.environ.setdefault("GDK_BACKEND", "x11")
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT  = os.path.dirname(SCRIPT_DIR)
 for p in [SCRIPT_DIR, REPO_ROOT]:
@@ -26,43 +29,43 @@ import sugar3_mock
 import sugar3_mock.activity               as _act
 import sugar3_mock.activity.activity      as _act_activity
 import sugar3_mock.activity.widgets       as _act_widgets
+import sugar3_mock.activity.bundlebuilder as _bundlebuilder
 import sugar3_mock.graphics               as _gfx
 import sugar3_mock.graphics.style         as _style
 import sugar3_mock.graphics.toolbutton    as _toolbtn
 import sugar3_mock.graphics.radiotoolbutton as _rtoolbtn
 import sugar3_mock.graphics.toolbarbox    as _toolbarbox
 import sugar3_mock.graphics.objectchooser as _objchooser
-import sugar3_mock.graphics.icon           as _icon
-import sugar3_mock.graphics.palette        as _palette
-import sugar3_mock.graphics.palettemenu    as _palettemenu
-import sugar3_mock.util                    as _util
-import sugar3_mock.activity.bundlebuilder  as _bundlebuilder
+import sugar3_mock.graphics.icon          as _icon
+import sugar3_mock.graphics.palette       as _palette
+import sugar3_mock.graphics.palettemenu   as _palettemenu
 import sugar3_mock.presence               as _pres
 import sugar3_mock.presence.presenceservice as _presservice
 import sugar3_mock.datastore              as _ds
 import sugar3_mock.datastore.datastore    as _datastore
 import sugar3_mock.speech                 as _speech_mod
+import sugar3_mock.util                   as _util
 
 sys.modules["sugar3"]                          = sugar3_mock
 sys.modules["sugar3.activity"]                 = _act
 sys.modules["sugar3.activity.activity"]        = _act_activity
 sys.modules["sugar3.activity.widgets"]         = _act_widgets
+sys.modules["sugar3.activity.bundlebuilder"]   = _bundlebuilder
 sys.modules["sugar3.graphics"]                 = _gfx
 sys.modules["sugar3.graphics.style"]           = _style
 sys.modules["sugar3.graphics.toolbutton"]      = _toolbtn
 sys.modules["sugar3.graphics.radiotoolbutton"] = _rtoolbtn
 sys.modules["sugar3.graphics.toolbarbox"]      = _toolbarbox
 sys.modules["sugar3.graphics.objectchooser"]   = _objchooser
-sys.modules["sugar3.graphics.icon"]           = _icon
-sys.modules["sugar3.graphics.palette"]        = _palette
-sys.modules["sugar3.graphics.palettemenu"]    = _palettemenu
-sys.modules["sugar3.util"]                    = _util
-sys.modules["sugar3.activity.bundlebuilder"]  = _bundlebuilder
+sys.modules["sugar3.graphics.icon"]            = _icon
+sys.modules["sugar3.graphics.palette"]         = _palette
+sys.modules["sugar3.graphics.palettemenu"]     = _palettemenu
 sys.modules["sugar3.presence"]                 = _pres
 sys.modules["sugar3.presence.presenceservice"] = _presservice
 sys.modules["sugar3.datastore"]                = _ds
 sys.modules["sugar3.datastore.datastore"]      = _datastore
 sys.modules["sugar3.speech"]                   = _speech_mod
+sys.modules["sugar3.util"]                     = _util
 sys.modules["sugar3.mime"]                     = sugar3_mock.mime
 sys.modules["sugar3.profile"]                  = sugar3_mock.profile
 
@@ -76,30 +79,11 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Gst", "1.0")
 from gi.repository import Gtk, Gst, GObject
 
-GObject.threads_init()
 Gst.init(None)
 
 print("✓ Mocks injected")
 print("✓ GTK + GStreamer initialised")
 
-
-# ── Direct espeak patch (bypasses GStreamer pipeline issues) ──
-import subprocess, threading
-
-def _espeak_direct(text, voice='en'):
-    subprocess.Popen(['espeak-ng', '-v', voice, text])
-
-# Patch face.say() to use direct espeak
-import face as _face_mod
-_original_say = None
-def _patched_say(self, something):
-    _espeak_direct(something)
-try:
-    _face_mod.Face.say = _patched_say
-    _face_mod.Face.say_notification = _patched_say
-    print("✓ Direct espeak patch applied")
-except AttributeError:
-    pass  # will be patched after import
 try:
     from activity import SpeakActivity
     print("✓ SpeakActivity imported")
@@ -107,6 +91,17 @@ except Exception as e:
     print(f"✗ Failed to import SpeakActivity: {e}")
     import traceback; traceback.print_exc()
     sys.exit(1)
+
+# Patch face.say to use direct espeak-ng subprocess
+import subprocess
+import face as _face_mod
+
+def _espeak_say(self, text):
+    subprocess.Popen(["espeak-ng", "-v", "en", str(text)])
+
+_face_mod.Face.say = _espeak_say
+_face_mod.Face.say_notification = _espeak_say
+print("✓ Direct espeak patch applied")
 
 try:
     class _Handle:
