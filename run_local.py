@@ -11,6 +11,9 @@ for p in [SCRIPT_DIR, REPO_ROOT]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
+# Remove real sugar3 from path — use our mock instead
+sys.path = [p for p in sys.path if "dist-packages" not in p or "sugar3" not in p]
+
 import dbus_mock
 sys.modules["dbus"] = dbus_mock
 
