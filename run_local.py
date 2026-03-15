@@ -107,8 +107,8 @@ import face as _face_mod
 def _espeak_say(self, text):
     subprocess.Popen(["espeak-ng", "-v", "en", str(text)])
 
-_face_mod.Face.say = _espeak_say
-_face_mod.Face.say_notification = _espeak_say
+_face_mod.View.say = _espeak_say
+_face_mod.View.say_notification = _espeak_say
 print("✓ Direct espeak patch applied")
 
 try:
